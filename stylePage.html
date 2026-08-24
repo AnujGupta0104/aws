@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - font | text | CSS Box model(W|H|Margin|Padding)</title>
+    <style>  
+        h1{
+            color:blue !important;
+            background-color: yellow;
+            font-family: "Times New Roman", Times, serif;
+            /* font-size: 5em; */
+            font-weight: 100;
+            font-style: italic;
+        }
+        p{
+            text-align: justify;
+            text-decoration: underline;
+            text-transform: capitalize;
+            text-shadow: 2px 2px 10px #986a76;
+            text-indent: 5px;/* this gives space at the start of the paragraph */
+            /* text-wrap: wrap; */
+        }
+        <!--box model-->
+
+        #box{
+            height: 500px;
+            width: 400px;
+            background: #ccc;
+            border: 5px solod #000;
+            padding: 50px;
+            box-sizing: border-box;
+
+
+        }
+
+    </style>
+
+</head>
+<body>
+    <!--css - inline / internal and external -->
+    <h1 style="font-size: 4em; color: rgb(255, 0, 81);">Hello World!</h1>
+    <div id ="box" >
+        <p>This is a paragraph inside the div.
+            lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
+        </p>
+    </div>
+</body>
+</html>
