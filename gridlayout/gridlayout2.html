@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Layout with Template</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f4f4;
+        color: #222;
+      }
+
+      .container {
+        width: min(1100px, 90vw);
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        grid-template-areas:
+          "header header header header header header header header header header header header"
+          "main main main main main main main main side side side side"
+          "features features features features features features features features features features features features"
+          "footer footer footer footer footer footer footer footer footer footer footer footer";
+        gap: 20px;
+      }
+
+      .box {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .header {
+        grid-area: header;
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+        color: white;
+      }
+
+      .main {
+        grid-area: main;
+        min-height: 250px;
+      }
+
+      .sidebar {
+        grid-area: side;
+        background: #eef2ff;
+      }
+
+      .features {
+        grid-area: features;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .feature {
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        min-height: 160px;
+      }
+
+      .footer {
+        grid-area: footer;
+        text-align: center;
+        background: #111827;
+        color: #f9fafb;
+      }
+
+      h1, h2, h3 {
+        margin-top: 0;
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar li {
+        padding: 10px 0;
+        border-bottom: 1px solid #dbeafe;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          grid-template-areas:
+            "header header header header header header header header header header header header"
+            "main main main main main main main main main main main main"
+            "side side side side side side side side side side side side"
+            "features features features features features features features features features features features features"
+            "footer footer footer footer footer footer footer footer footer footer footer footer";
+        }
+
+        .features {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 480px) {
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="box header">
+        <h1>My Website</h1>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main class="box main">
+        <h2>Main Content</h2>
+        <p>
+          This is a column-based grid layout using CSS Grid template areas. The layout
+          includes a header, main content area, right sidebar, feature cards, and footer.
+        </p>
+        <p>
+          Grid areas make it easy to design structured page layouts while keeping the code
+          simple and responsive.
+        </p>
+      </main>
+
+      <aside class="box sidebar">
+        <h3>Sidebar</h3>
+        <ul>
+          <li>Dashboard</li>
+          <li>Analytics</li>
+          <li>Reports</li>
+          <li>Settings</li>
+        </ul>
+      </aside>
+
+      <section class="features">
+        <a href="https://www.google.com" class="feature">
+          <h3>Feature 1</h3>
+          <p>Flexible layouts for modern websites.</p>
+        </a>
+        <a href="https://www.github.com" class="feature">
+          <h3>Feature 2</h3>
+          <p>Responsive structures for all screen sizes.</p>
+        </a>
+        <a href="https://www.stackoverflow.com" class="feature">
+          <h3>Feature 3</h3>
+          <p>Clean and maintainable code with CSS Grid.</p>
+        </a>
+        <a href="https://www.amazon.com" class="feature">
+          <h3>Feature 4</h3>
+          <p>More sections, better content organization.</p>
+        </a>
+        <a href="https://www.wikipedia.org" class="feature">
+          <h3>Feature 5</h3>
+          <p>Optimized layouts that scale across devices.</p>
+        </a>
+        <a href="https://www.linkedin.com" class="feature">
+          <h3>Feature 6</h3>
+          <p>Simple styling that keeps pages easy to maintain.</p>
+        </a>
+      </section>
+
+      <footer class="box footer">
+        <p>© 2026 Grid Layout Demo</p>
+      </footer>
+    </div>
+  </body>
+</html>
