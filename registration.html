@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        *,html {
+            margin: 0;
+            padding: 0;
+            
+        }
+        #box{
+            width: 100%;
+            height: 100vh;
+            background-color:rgb(167, 167, 189);
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <form>
+            <div>
+                <label>Your name</label>
+                <input type="text" name="name" placeholder="Enter your name">
+            </div>
+            <div>
+                <label>Your Email</label>
+                <input type="email" name="email" placeholder="Enter your email">
+            </div>
+            <div>
+                <label>Your Phone Number</label>
+                <input type="tel" name="phone" placeholder="Enter your phone number">
+            </div>
+            <div>
+                <label>Your DOB</label>
+                <input type="date" name="dob" placeholder="Enter your date of birth">
+            </div>
+            <div>
+                <label>Your gender</label>
+                <input type="radio" name="gender" value="male"/> <label for="male">Male</label>
+                <input type="radio" name="gender" value="female"/> <label for="female">Female</label>
+                <input type="radio" name="gender" value="other"/> <label for="other">Other</label>
+            </div>
+            <div>
+                <label>Your Course</label>
+                <select name="course">
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="M.Tech">M.Tech</option>
+                </select>   
+            </div>
+            <div>
+                <label>Your Hobbies</label>
+                <input type="checkbox" name="hobby" value="reading"/> <label for="reading">Reading</label>
+                <input type="checkbox" name="hobby" value="traveling"/> <label for="traveling">Traveling</label>
+                <input type="checkbox" name="hobby" value="sports"/> <label for="sports">Sports</label>
+                <input type="checkbox" name="hobby" value="music"/> <label for="music">Music</label>
+            </div>
+            <div>
+                <label>Your Country</label>
+                <select name="country">
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="Canada">Canada</option>
+                </select>
+            </div>
+            <div>
+                <label>Your Address</label>
+                <textarea name="address" placeholder="Enter your address"></textarea>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
