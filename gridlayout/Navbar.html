@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        ul {
+            list-style-type: none;
+            flex: auto;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #e7e3e3;
+        }
+
+        ul li {
+            float: left;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        ul li a {
+            display: block;
+            color: #000;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        ul li a:hover {
+            background-color: brown;
+            color: white;
+            font size: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #Apply-Now a:hover {
+            background-color: green;
+            color: orange;
+            font size: 20px;
+            font-family: times new roman;
+            border-radius: 0px;
+            padding: 10px 20px;
+        }
+
+        .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul>
+            <li id="Apply-Now"><a href="https://www.kiet.edu/" target="_blank" class="active">Apply Now</a></li>
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Wiki" target="_blank">Home</a></li>
+            <li><a href="https://github.com/AnujGupta0104/aws/commit/4947a6e79d5a82130af13fbb6968b87023347275"
+                    target="_blank">About</a></li>
+            <li><a href="https://www.w3schools.com/html/" target="_self">Services</a></li>
+            <li><a href="https://vscode.dev/github/AnujGupta0104/aws/blob/main/gridlayout/Contact.html"
+                    target="_blank">Contact</a></li>
+            <li><a href="https://www.kiet.edu/" target="_blank">Blog</a></li>
+            <li><a href="#" class="active">Portfolio</a></li>
+            <li><a href="#">Careers</a></li>
+        </ul>
+    </div>
+
+</body>
+
+</html>
