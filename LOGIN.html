@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <h1>Login</h1>
+
+    <form>
+
+        <label>Username:</label>
+        <input type="text"
+               placeholder="Enter username"
+               minlength="3"
+               maxlength="20"
+               required>
+
+        <br><br>
+
+        <label>Password:</label>
+        <input type="password"
+               placeholder="Enter password"
+               minlength="8"
+               maxlength="20"
+               pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+               title="Password must be 8-20 characters long and include both letters and numbers."
+               required>
+
+        <br><br>
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+</body>
+</html>
