@@ -15,12 +15,20 @@
     <input type="email" placeholder="write your email">
     <br><br>
 
-    <label>Password:</label>
+    <!-- <label>Password:</label>
     <input type="password" placeholder="write your password" minlength="8" 
   maxlength="20"  pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$" 
   title="Password must be 8-20 characters long and include both
    letters and numbers."
-  required>
+  required> -->
+  <label>Password:</label>
+<input type="password"
+       placeholder="write your password"
+       minlength="8"
+       maxlength="20"
+       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+       title="Password must be 8-20 characters long and include both letters and numbers."
+       required>
     <br><br>
 
     <label>Age:</label>

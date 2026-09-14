@@ -1,11 +1,522 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=22514d2c-b76a-4f63-a7d0-fb73e4563c4a
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=22514d2c-b76a-4f63-a7d0-fb73e4563c4a">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CropConnect: Smart Procurement Tracker</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0ea5a4;
+      --accent-2:#0369a1;
+      --glass: rgba(2,6,23,0.04);
+      --success:#16a34a;
+      --warn:#f97316;
+      --shadow: 0 8px 30px rgba(16,24,40,0.06);
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#eef2f7 0%, #f7fbff 100%); color:#0f1724;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+    }
+
+    header{
+      max-width:1200px; margin:0 auto 20px; display:flex; align-items:center; gap:18px;
+    }
+    .brand{
+      display:flex; gap:14px; align-items:center;
+    }
+    .logo{
+      width:56px; height:56px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:20px;
+      box-shadow:var(--shadow);
+    }
+    h1{ margin:0; font-size:20px; letter-spacing:0.2px; }
+    p.lead{ margin:0; color:var(--muted); font-size:13px; }
+
+    .layout{
+      max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1fr 420px; gap:20px;
+    }
+
+    .card{
+      background:var(--card); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);
+      border:1px solid rgba(15,23,42,0.04);
+    }
+
+    /* Left column: overview + controls */
+    .overview .row{ display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+    .muted{ color:var(--muted); font-size:13px; }
+    .controls{ display:flex; gap:10px; align-items:center; margin-bottom:12px; }
+    input[type="number"], input[type="text"]{
+      padding:10px 12px; border-radius:10px; border:1px solid rgba(15,23,42,0.06); background:transparent; font-size:14px;
+      outline:none; color:inherit;
+    }
+    .btn{
+      background:var(--accent); color:white; padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
+      box-shadow: 0 6px 18px rgba(14,165,164,0.12);
+    }
+    .btn.ghost{ background:transparent; color:var(--accent-2); border:1px solid rgba(3,105,161,0.08); box-shadow:none; font-weight:600; }
+    .btn.small{ padding:8px 10px; font-size:13px; }
+
+    /* Form */
+    form .form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
+    .form-field{ margin-bottom:10px; }
+
+    /* Table */
+    table{ width:100%; border-collapse:collapse; font-size:14px; }
+    th, td{ text-align:left; padding:10px 8px; border-bottom:1px solid rgba(15,23,42,0.04); }
+    th{ color:var(--muted); font-weight:600; font-size:13px; }
+    .status-approved{ color:var(--success); font-weight:700; }
+    .status-resched{ color:var(--warn); font-weight:700; }
+    .status-pending{ color:var(--muted); font-weight:600; }
+
+    /* Right column: dashboard */
+    .dashboard .section{ margin-bottom:14px; }
+    .logs{ max-height:220px; overflow:auto; background:linear-gradient(180deg, rgba(2,6,23,0.02), rgba(2,6,23,0.01)); padding:12px; border-radius:10px; font-family:monospace; font-size:13px; color:#0f1724; }
+    .summary{ display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .stat{ background:linear-gradient(180deg,#ffffff,#fbfdff); padding:12px; border-radius:10px; width:48%; box-shadow:0 6px 18px rgba(2,6,23,0.03); }
+    .stat strong{ display:block; font-size:18px; color:var(--accent-2); }
+    .footnote{ font-size:12px; color:var(--muted); margin-top:8px; }
+
+    /* Responsive */
+    @media (max-width:980px){
+      .layout{ grid-template-columns: 1fr; }
+      header{ padding-bottom:12px; flex-direction:column; align-items:flex-start; gap:8px; }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <button class="btn ghost" id="langToggleBtn" style="margin-left:12px;">हिन्दी / English</button>
+    <div class="brand">
+      <div class="logo">CC</div>
+      <div>
+        <h1>CropConnect: Smart Procurement Tracker</h1>
+        <p class="lead">Efficient slot allocation, SMS notifications, and payment tracking — visual simulator only.</p>
+      </div>
+    </div>
+    <div style="margin-left:auto; text-align:right;">
+      <div class="muted">MSP Rate: <strong>₹22.50 / kg</strong></div>
+      <div class="muted">Start Slot: <strong>09:00 AM</strong></div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Left: Registration & Controls -->
+    <section class="card overview" aria-labelledby="overviewTitle">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div>
+          <h2 id="overviewTitle" style="margin:0; font-size:16px;">Registration & Controls</h2>
+          <div class="muted">Register farmers, set capacity, and run allocation</div>
+        </div>
+        <div class="muted">Local simulator — no backend</div>
+      </div>
+
+      <div class="controls">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <label class="muted" for="capacityInput" style="margin:0 6px 0 0;">Capacity (Kg)</label>
+          <input id="capacityInput" type="number" min="1" value="5000" style="width:140px;" />
+        </div>
+        <button class="btn" id="setCapacityBtn">Set Capacity</button>
+        <button class="btn ghost" id="resetBtn">Reset All</button>
+      </div>
+
+      <form id="registerForm" onsubmit="return false;" aria-label="Register farmer form">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="farmerId">Farmer ID</label>
+            <input id="farmerId" type="number" placeholder="e.g., 101" required />
+          </div>
+          <div class="form-field">
+            <label for="farmerName">Full Name</label>
+            <input id="farmerName" type="text" placeholder="Farmer name" required />
+          </div>
+          <div class="form-field">
+            <label for="farmerPhone">Phone</label>
+            <input id="farmerPhone" type="text" placeholder="10-digit mobile" required />
+          </div>
+          <div class="form-field">
+            <label for="farmerQty">Crop (Kg)</label>
+            <input id="farmerQty" type="number" min="1" value="100" required />
+          </div>
+          <div class="form-field">
+            <label for="farmerDistance">Distance (Km)</label>
+            <input id="farmerDistance" type="number" min="0" value="10" required />
+          </div>
+          <div style="display:flex; align-items:end; gap:8px;">
+            <button class="btn" id="registerBtn">Register Farmer</button>
+            <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+          </div>
+        </div>
+      </form>
+
+      <hr style="border:none; height:1px; background:var(--glass); margin:16px 0;" />
+
+      <div style="display:flex; gap:10px; margin-bottom:12px;">
+        <button class="btn" id="runAllocBtn">Run Allocation</button>
+        <button class="btn" id="smsBtn">Broadcast SMS</button>
+        <button class="btn" id="trackBtn">Show Payments</button>
+      </div>
+
+      <div>
+        <h3 style="margin:8px 0 10px 0; font-size:15px;">Registered Farmers</h3>
+        <div style="overflow:auto; max-height:260px;">
+          <table aria-label="Registered farmers table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Kg</th><th>Dist</th><th>Priority</th><th>Status</th></tr>
+            </thead>
+            <tbody id="farmersTbody">
+              <tr><td colspan="6" class="muted">No farmers registered</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Dashboard -->
+    <aside class="card dashboard" aria-labelledby="dashboardTitle">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div>
+          <h2 id="dashboardTitle" style="margin:0; font-size:16px;">Dashboard</h2>
+          <div class="muted">Quick insights and logs</div>
+        </div>
+        <div class="muted">Simulator</div>
+      </div>
+
+      <div class="section summary">
+        <div class="stat">
+          <div class="muted">Total Registered</div>
+          <strong id="statTotal">0</strong>
+          <div class="footnote">Number of farmers currently in the system</div>
+        </div>
+        <div class="stat">
+          <div class="muted">Allocated Today (Kg)</div>
+          <strong id="statAllocated">0</strong>
+          <div class="footnote">Total crop allocated for today's procurement</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin:8px 0 10px 0; font-size:14px;">SMS / Notification Logs</h3>
+        <div class="logs" id="smsLogs">No messages yet.</div>
+      </div>
+
+      <div class="section">
+        <h3 style="margin:8px 0 10px 0; font-size:14px;">Procurement & Payments</h3>
+        <div id="paymentsWrap" class="muted">Run allocation and click "Show Payments" to view tracker.</div>
+      </div>
+
+      <div style="margin-top:8px;" class="muted"></div>
+    </aside>
+  </main>
+
+  <footer style="max-width:1200px; margin:18px auto; text-align:center; color:var(--muted); font-size:13px;">
     
+  </footer>
+
+  <script>
+    // Professional simulator JS (no backend code shown)
+    (function(){
+      const MSP_RATE_PER_KG = 22.50;
+      let centerCapacityKg = 5000;
+      let currentAllocatedKg = 0;
+      let farmers = [];
+
+      // DOM
+      const capacityInput = document.getElementById('capacityInput');
+      const setCapacityBtn = document.getElementById('setCapacityBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const registerBtn = document.getElementById('registerBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const farmersTbody = document.getElementById('farmersTbody');
+      const smsLogs = document.getElementById('smsLogs');
+      const runAllocBtn = document.getElementById('runAllocBtn');
+      const smsBtn = document.getElementById('smsBtn');
+      const trackBtn = document.getElementById('trackBtn');
+      const statTotal = document.getElementById('statTotal');
+      const statAllocated = document.getElementById('statAllocated');
+      const paymentsWrap = document.getElementById('paymentsWrap');
+
+      // Form fields
+      const fid = document.getElementById('farmerId');
+      const fname = document.getElementById('farmerName');
+      const fphone = document.getElementById('farmerPhone');
+      const fqty = document.getElementById('farmerQty');
+      const fdist = document.getElementById('farmerDistance');
+
+      // Helpers
+      function calculatePriority(distance, quantity){
+        let score = 0;
+        if (distance > 50) score += 30;
+        else if (distance > 20) score += 20;
+        else score += 10;
+        if (quantity > 1000) score += 20;
+        else score += 10;
+        return score;
+      }
+      function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+      function renderFarmers(){
+        farmersTbody.innerHTML = '';
+        if (farmers.length === 0){
+          farmersTbody.innerHTML = '<tr><td colspan="6" class="muted">No farmers registered</td></tr>';
+          statTotal.textContent = '0';
+          return;
+        }
+        for (const f of farmers){
+          const tr = document.createElement('tr');
+          const statusLabel = f.status === 'APPROVED_TODAY' ? '<span class="status-approved">APPROVED_TODAY</span>' :
+                              f.status === 'RESCHEDULED_TOMORROW' ? '<span class="status-resched">RESCHEDULED_TOMORROW</span>' :
+                              '<span class="status-pending">PENDING</span>';
+          tr.innerHTML = `<td>${f.id}</td>
+                          <td>${escapeHtml(f.name)}</td>
+                          <td>${f.cropQuantityKg}</td>
+                          <td>${f.distanceKm}</td>
+                          <td>${f.priorityScore}</td>
+                          <td>${statusLabel}</td>`;
+          farmersTbody.appendChild(tr);
+        }
+        statTotal.textContent = String(farmers.length);
+      }
+
+      function appendLog(text){
+        const now = new Date().toLocaleString();
+        if (smsLogs.innerText.trim() === 'No messages yet.') smsLogs.innerText = '';
+        smsLogs.innerText += `\n[${now}] ${text}\n--------------------------------------------------\n`;
+        smsLogs.scrollTop = smsLogs.scrollHeight;
+      }
+
+      // Actions
+      setCapacityBtn.addEventListener('click', () => {
+        const v = parseInt(capacityInput.value, 10);
+        if (!isNaN(v) && v > 0) {
+          centerCapacityKg = v;
+          alert('Capacity set to ' + centerCapacityKg + ' Kg');
+        } else alert('Enter a valid capacity');
+      });
+
+      resetBtn.addEventListener('click', () => {
+        if (!confirm('Reset all registered data?')) return;
+        farmers = [];
+        currentAllocatedKg = 0;
+        centerCapacityKg = 5000;
+        capacityInput.value = centerCapacityKg;
+        smsLogs.innerText = 'No messages yet.';
+        paymentsWrap.innerHTML = 'Run allocation and click "Show Payments" to view tracker.';
+        renderFarmers();
+        statAllocated.textContent = '0';
+      });
+
+      clearBtn.addEventListener('click', () => {
+        fid.value = ''; fname.value = ''; fphone.value = ''; fqty.value = 100; fdist.value = 10;
+      });
+
+      registerBtn.addEventListener('click', () => {
+        const id = parseInt(fid.value,10);
+        const name = fname.value.trim();
+        const phone = fphone.value.trim();
+        const qty = parseInt(fqty.value,10);
+        const dist = parseInt(fdist.value,10);
+
+        if (!id || !name || !phone || !qty || isNaN(dist)) {
+          alert('Please fill all fields correctly.');
+          return;
+        }
+        if (farmers.some(x => x.id === id)) {
+          alert('A farmer with this ID already exists.');
+          return;
+        }
+
+        const priorityScore = calculatePriority(dist, qty);
+        const totalPayoutAmount = +(qty * MSP_RATE_PER_KG).toFixed(2);
+
+        const farmer = {
+          id, name, phone, cropQuantityKg: qty, distanceKm: dist,
+          priorityScore, status: 'PENDING', allocatedSlotHour: 0,
+          totalPayoutAmount, payment: 'UNPROCESSED'
+        };
+
+        farmers.push(farmer);
+        renderFarmers();
+        alert('Farmer registered: ' + name + ' (Priority: ' + priorityScore + ')');
+      });
+
+      runAllocBtn.addEventListener('click', () => {
+        if (farmers.length === 0) { alert('No farmers to allocate.'); return; }
+        // Sort by priority descending
+        farmers.sort((a,b) => b.priorityScore - a.priorityScore);
+        currentAllocatedKg = 0;
+        let currentSlotHour = 9;
+        for (const f of farmers){
+          if (currentAllocatedKg + f.cropQuantityKg <= centerCapacityKg) {
+            currentAllocatedKg += f.cropQuantityKg;
+            f.status = 'APPROVED_TODAY';
+            f.allocatedSlotHour = currentSlotHour;
+            currentSlotHour = (currentSlotHour >= 17) ? 9 : currentSlotHour + 1;
+          } else {
+            f.status = 'RESCHEDULED_TOMORROW';
+            f.allocatedSlotHour = 9;
+          }
+        }
+        renderFarmers();
+        statAllocated.textContent = String(currentAllocatedKg);
+        appendLog('[SYSTEM] Smart slot allocation complete. Congestion reduction applied.');
+      });
+
+      smsBtn.addEventListener('click', () => {
+        if (farmers.length === 0) { alert('No farmers registered.'); return; }
+        for (const f of farmers){
+          let msg;
+          if (f.status === 'APPROVED_TODAY') {
+            msg = `Dear ${f.name}, your appointment is CONFIRMED for TODAY at ${f.allocatedSlotHour}:00. Load: ${f.cropQuantityKg}kg.`;
+          } else {
+            msg = `Dear ${f.name}, capacity full today. Your slot is RESCHEDULED to TOMORROW at ${f.allocatedSlotHour}:00.`;
+          }
+          appendLog(`[OUTGOING SMS] -> To: +91-${f.phone} (${f.name})\nMESSAGE: "${msg}"`);
+        }
+      });
+
+      trackBtn.addEventListener('click', () => {
+        if (farmers.length === 0) { alert('No farmers registered.'); return; }
+        for (const f of farmers){
+          if (f.status === 'APPROVED_TODAY') f.payment = 'PAYMENT_SUCCESSFUL';
+        }
+        let html = '<table style="width:100%; border-collapse:collapse;"><thead><tr style="text-align:left; color:#6b7280;"><th style="padding:8px">ID</th><th style="padding:8px">Farmer</th><th style="padding:8px">Crop(Kg)</th><th style="padding:8px">Slot Time</th><th style="padding:8px">Payout(INR)</th><th style="padding:8px">Payment Status</th></tr></thead><tbody>';
+        for (const f of farmers){
+          const timeStr = (f.status === 'APPROVED_TODAY') ? (f.allocatedSlotHour + ':00 hrs') : 'Tomorrow';
+          const payStatusStr = (f.payment === 'PAYMENT_SUCCESSFUL') ? 'DBT_PAID_SUCCESS' : 'PENDING_SLOT';
+          html += `<tr><td style="padding:8px">${f.id}</td><td style="padding:8px">${escapeHtml(f.name)}</td><td style="padding:8px">${f.cropQuantityKg}</td><td style="padding:8px">${timeStr}</td><td style="padding:8px">₹${f.totalPayoutAmount.toFixed(2)}</td><td style="padding:8px">${payStatusStr}</td></tr>`;
+        }
+        html += `</tbody></table><div style="margin-top:8px; color:#6b7280; font-size:13px;">Total Procurement Completed Today: ${currentAllocatedKg} / ${centerCapacityKg} Kg</div>`;
+        paymentsWrap.innerHTML = html;
+      });
+
+      // Initial render
+      renderFarmers();
+      statAllocated.textContent = '0';
+    })();
+  </script>
+  <script>
+  const translations = {
+    en: {
+      pageTitle: "CropConnect: Smart Procurement Tracker",
+      title: "CropConnect: Smart Procurement Tracker",
+      subtitle: "Efficient slot allocation, SMS notifications, and payment tracking — visual simulator only.",
+      mspRate: "MSP Rate: ₹22.50 / kg",
+      startSlot: "Start Slot: 09:00 AM",
+      overviewTitle: "Registration & Controls",
+      overviewSubtitle: "Register farmers, set capacity, and run allocation",
+      localSimulatorNote: "Local simulator — no backend",
+      capacityLabel: "Capacity (Kg)",
+      setCapacityBtn: "Set Capacity",
+      resetBtn: "Reset All",
+      farmerIdLabel: "Farmer ID",
+      farmerNameLabel: "Full Name",
+      farmerPhoneLabel: "Phone",
+      farmerQtyLabel: "Crop (Kg)",
+      farmerDistanceLabel: "Distance (Km)",
+      registerBtn: "Register Farmer",
+      clearBtn: "Clear",
+      runAllocBtn: "Run Allocation",
+      smsBtn: "Broadcast SMS",
+      trackBtn: "Show Payments",
+      farmersHeading: "Registered Farmers",
+      thId: "ID",
+      thName: "Name",
+      thKg: "Kg",
+      thDist: "Dist",
+      thPriority: "Priority",
+      thStatus: "Status",
+      noFarmersMsg: "No farmers registered",
+      dashboardTitle: "Dashboard",
+      dashboardSubtitle: "Quick insights and logs",
+      simulatorNote: "Simulator",
+      statRegisteredLabel: "Total Registered",
+      statRegisteredNote: "Number of farmers currently in the system",
+      statAllocatedLabel: "Allocated Today (Kg)",
+      statAllocatedNote: "Total crop allocated for today's procurement",
+      smsLogsHeading: "SMS / Notification Logs",
+      paymentsHeading: "Procurement & Payments",
+      paymentsWrap: "Run allocation and click \"Show Payments\" to view tracker."
+    },
+    hi: {
+      pageTitle: "क्रॉपकनेक्ट: स्मार्ट खरीद ट्रैकर",
+      title: "क्रॉपकनेक्ट: स्मार्ट खरीद ट्रैकर",
+      subtitle: "स्लॉट आवंटन, SMS सूचनाएँ और भुगतान ट्रैकिंग — केवल दृश्य सिम्युलेटर।",
+      mspRate: "एमएसपी दर: ₹22.50 / किलो",
+      startSlot: "प्रारंभ स्लॉट: 09:00 पूर्वाह्न",
+      overviewTitle: "पंजीकरण और नियंत्रण",
+      overviewSubtitle: "किसानों को पंजीकृत करें, क्षमता सेट करें और आवंटन चलाएँ",
+      localSimulatorNote: "स्थानीय सिम्युलेटर — कोई बैकएंड नहीं",
+      capacityLabel: "क्षमता (किलो)",
+      setCapacityBtn: "क्षमता सेट करें",
+      resetBtn: "सभी रीसेट करें",
+      farmerIdLabel: "किसान आईडी",
+      farmerNameLabel: "पूरा नाम",
+      farmerPhoneLabel: "फ़ोन",
+      farmerQtyLabel: "फसल (किलो)",
+      farmerDistanceLabel: "दूरी (किमी)",
+      registerBtn: "किसान पंजीकरण",
+      clearBtn: "साफ़ करें",
+      runAllocBtn: "आवंटन चलाएँ",
+      smsBtn: "SMS प्रसारित करें",
+      trackBtn: "भुगतान दिखाएँ",
+      farmersHeading: "पंजीकृत किसान",
+      thId: "आईडी",
+      thName: "नाम",
+      thKg: "किलो",
+      thDist: "दूरी",
+      thPriority: "प्राथमिकता",
+      thStatus: "स्थिति",
+      noFarmersMsg: "कोई किसान पंजीकृत नहीं",
+      dashboardTitle: "डैशबोर्ड",
+      dashboardSubtitle: "त्वरित अंतर्दृष्टि और लॉग्स",
+      simulatorNote: "सिम्युलेटर",
+      statRegisteredLabel: "कुल पंजीकृत",
+      statRegisteredNote: "वर्तमान में सिस्टम में किसानों की संख्या",
+      statAllocatedLabel: "आज आवंटित (किलो)",
+      statAllocatedNote: "आज की खरीद के लिए कुल फसल आवंटित",
+      smsLogsHeading: "SMS / अधिसूचना लॉग्स",
+      paymentsHeading: "खरीद और भुगतान",
+      paymentsWrap: "आवंटन चलाएँ और ट्रैकर देखने के लिए \"भुगतान दिखाएँ\" पर क्लिक करें।"
+    }
+  };
+
+  let currentLang = "en";
+
+  function updateLanguage(lang) {
+    const t = translations[lang];
+    for (const key in t) {
+      const el = document.getElementById(key);
+      if (el) {
+        if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+          el.placeholder = t[key];
+        } else {
+          el.textContent = t[key];
+        }
+      }
+    }
+  }
+
+  document.getElementById("langToggleBtn").addEventListener("click", () => {
+    currentLang = currentLang === "en" ? "hi" : "en";
+    updateLanguage(currentLang);
+  });
+</script>
 </body>
 </html>
