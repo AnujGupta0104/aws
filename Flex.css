@@ -1,0 +1,20 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    border: 2px solid rgb(150, 24, 24);
+    align-items: flex-end;
+    gap: 10px;
+    height: 100vh;
+    padding: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.box{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    margin: 10px;
+    padding: 10px;
+}
