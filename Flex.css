@@ -1,20 +1,28 @@
-.container{
+#container{
     display: flex;
     flex-direction: row;
     justify-content: start;
-    border: 2px solid rgb(150, 24, 24);
+    border: 2px solid rgb(8, 8, 8);
     align-items: flex-end;
     gap: 10px;
-    height: 100vh;
+    height: 20vh;
     padding: 10px;
     align-items: center;
     flex-wrap: wrap;
 
 }
-.box{
+#box{
     width: 100px;
     height: 100px;
-    background-color: red;
+    background-color: rgb(229, 217, 217);
     margin: 10px;
-    padding: 10px;
+    padding: 1px;
+}
+#box:first-child{
+    flex:3 3 100px;
+}
+#box:nth-child(2),
+#box:nth-child(3)
+{
+    flex:2;
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Flex.css">
+    <title>Learning Flexbox</title>
+</head>
+<body>
+    <h1>Learning Flexbox</h1>
+    <details>
+        <summary>What is Flexbox?</summary>
+        <p>Flexbox is a one-dimensional layout method for arranging items in rows or columns. It provides a more efficient way to lay out, align and distribute space among items in a container, even when their size is unknown or dynamic.</p>
+    </details>
+    <div id="container" style="display: flex; gap: 10px;">
+        <div id="box">Box 1</div>
+        <div id="box">Box 2</div>
+        <div id ="box">Box 3</div>
+    </div>
+    <!-- <div style="display: flex; flex-direction: row; gap: 10px;">
+        <div style="background-color: lightblue; padding: 20px;">Item 1</div>
+        <div style="background-color: lightgreen; padding: 20px;">Item 2</div>
+        <div style="background-color: lightcoral; padding: 20px;">Item 3</div>
+    </div> -->
+
+    <br><br>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background-color: lightblue; padding: 20px;">Item A</div>
+        <div style="background-color: lightgreen; padding: 20px;">Item B</div>
+        <div style="background-color: lightcoral; padding: 20px;">Item C</div>
+    </div>
+
+    <br><br>
+
+    <div style="display: flex; justify-content: space-between; background-color: lightgray; padding: 20px;">
+        <div>Left</div>
+        <div>Center</div>
+        <div>Right</div>
+    </div>
+
+    <br><br>
+
+    <div style="display: flex; align-items: center; height: 100px; background-color: lightyellow;">
+        <div>Aligned Center Vertically</div>
+    </div>
+    
+</body>
+</html>
