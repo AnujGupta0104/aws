@@ -4,73 +4,371 @@
 <head>
     <title>QuickBasket</title>
     <link rel="stylesheet" href="BlinkitStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
     <header>
         <h1>QuickBasket</h1>
         <p>Delivery in 10 minutes</p>
-        <input type="text" placeholder="Search products">
-        <button>Login</button>
-        <button>Cart</button>
+
+        <input type="text" id="searchInput" placeholder="Search products">
+        <button onclick="window.location.href='Login.html'">Login</button>
+        <button onclick="showCart()">Cart (<span id="cartCount">0</span>)</button>
     </header>
 
-    <div class="banner">
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#products">Products</a>
+        <a href="#cart">Cart</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="Signup.html">Sign Up</a>
+    </nav>
+
+    <div class="banner" id="home">
         <h1>Welcome to QuickBasket</h1>
         <p>Get your groceries delivered in minutes!</p>
+        <a href="#products" class="shop-button">Shop Now</a>
     </div>
 
-    <h2>Shop by Category</h2>
+    <section id="categories">
+        <h2>Shop by Category</h2>
 
-    <div class="categories">
-        <p>Fruits</p>
-        <p>Vegetables</p>
-        <p>Dairy</p>
-        <p>Snacks</p>
-        <p>Beverages</p>
-    </div>
+        <div class="categories">
+            <a href="#products" onclick="filterCategory('Fruits')">Fruits</a>
+            <a href="#products" onclick="filterCategory('Vegetables')">Vegetables</a>
+            <a href="#products" onclick="filterCategory('Dairy')">Dairy</a>
+            <a href="#products" onclick="filterCategory('Snacks')">Snacks</a>
+            <a href="#products" onclick="filterCategory('Beverages')">Beverages</a>
+        </div>
+    </section>
 
+    
+<section id="products">
     <h2>Popular Products</h2>
 
     <div class="products">
 
-        <div class="card">
-            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSmJ9TPtzlbJ-_4QzqES5P06J9z6Qqb4twK93E3P4moNGBq-W62IM0GySo3au1QF7KnyJWPUeEWmY6FlImTSDUjodKdiIxAJlhhHGjm0y-0pRyHjlEXOjgne7DlJpKgYLs799ELpPk&usqp=CAc">
-            <h3>Amul Milk</h3>
-            <p>500 ml</p>
-            <p>₹30</p>
-            <button>Add</button>
+        <!-- FRUITS -->
+        <div class="card" data-category="Fruits">
+            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSUNiLB48a46YI-ViyzeDdXsG2d0fw7WXl0m2tsIF_IBT10Aic-n1Q3MKf29ChTdysu8RHKqZW1Evt9YBDtwXiiDmm6_EZm4xaoEKyUatk" alt="Bananas">
+            <h3>Fresh Bananas</h3><p>6 Pieces</p><p>₹40</p>
+            <button class="add-button" onclick="addToCart('Fresh Bananas',40)">Add</button>
         </div>
 
-        <div class="card">
-            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQiwdzwFk1y6q6PNuS4lcUvP43BpFgzUxrlG0jSzIDVsygoCuXnfh8YOhxKFtMNb2HKlMIJHBf0s-w_yulok5WZFexi9ROqOXz2ItpmQFR825IJZSbOt4Fg">
-            <h3>Brown Bread</h3>
-            <p>1 Packet</p>
-            <p>₹45</p>
-            <button>Add</button>
+        <div class="card" data-category="Fruits">
+            <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500" alt="Apples">
+            <h3>Fresh Apples</h3><p>1 kg</p><p>₹120</p>
+            <button class="add-button" onclick="addToCart('Fresh Apples',120)">Add</button>
         </div>
 
-        <div class="card">
-            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSUNiLB48a46YI-ViyzeDdXsG2d0fw7WXl0m2tsIF_IBT10Aic-n1Q3MKf29ChTdysu8RHKqZW1Evt9YBDtwXiiDmm6_EZm4xaoEKyUatk">
-            <h3>Fresh Bananas</h3>
-            <p>6 Pieces</p>
-            <p>₹40</p>
-            <button>Add</button>
+        <div class="card" data-category="Fruits">
+            <img src="https://images.unsplash.com/photo-1547514701-42782101795e?w=500" alt="Oranges">
+            <h3>Juicy Oranges</h3><p>1 kg</p><p>₹80</p>
+            <button class="add-button" onclick="addToCart('Juicy Oranges',80)">Add</button>
         </div>
 
-        <div class="card">
-            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSKYlXxQzZnZvfbvGbaOuvH7bH4awdQl6a3hN1lUg_WUrrdcXom_HMAswEQOvRzv7wJfVVpuymJdhGYXkv22KQ8EDXRisXm7o6qkDsUyV7yWse37sp3-GHp">
-            <h3>Potato Chips</h3>
-            <p>1 Packet</p>
-            <p>₹20</p>
-            <button>Add</button>
+        <div class="card" data-category="Fruits">
+            <img src="https://images.herzindagi.info/image/2019/Apr/tips-to-buy-mangoes.jpg" alt="Mangoes">
+            <h3>Sweet Mangoes</h3><p>1 kg</p><p>₹100</p>
+            <button class="add-button" onclick="addToCart('Sweet Mangoes',100)">Add</button>
+        </div>
+
+        <div class="card" data-category="Fruits">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIGQQt60Xv7d1UqeX43x7kjbV3Y0qGocI1hKqHWiy7wA&s=10" alt="Papaya">
+            <h3>Fresh Papaya</h3><p>1 Piece</p><p>₹50</p>
+            <button class="add-button" onclick="addToCart('Fresh Papaya',50)">Add</button>
+        </div>
+
+        <!-- VEGETABLES -->
+        <div class="card" data-category="Vegetables">
+            <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500" alt="Potatoes">
+            <h3>Potatoes</h3><p>1 kg</p><p>₹30</p>
+            <button class="add-button" onclick="addToCart('Potatoes',30)">Add</button>
+        </div>
+
+        <div class="card" data-category="Vegetables">
+            <img src="https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=500" alt="Tomatoes">
+            <h3>Fresh Tomatoes</h3><p>1 kg</p><p>₹40</p>
+            <button class="add-button" onclick="addToCart('Fresh Tomatoes',40)">Add</button>
+        </div>
+
+        <div class="card" data-category="Vegetables">
+            <img src="https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500" alt="Onions">
+            <h3>Onions</h3><p>1 kg</p><p>₹35</p>
+            <button class="add-button" onclick="addToCart('Onions',35)">Add</button>
+        </div>
+
+        <div class="card" data-category="Vegetables">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2BbHqWIWsMzwXpL6VoX8TGiuWYe4inv9prkmbeBUJsg&s=10" alt="Carrots">
+            <h3>Fresh Carrots</h3><p>500 g</p><p>₹25</p>
+            <button class="add-button" onclick="addToCart('Fresh Carrots',25)">Add</button>
+        </div>
+
+        <div class="card" data-category="Vegetables">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDN8C0IR5-29RSUAaT6XptPIU5BaoGq2a0joc0Bi4EAQ&s=10" alt="Cucumber">
+            <h3>Cucumber</h3><p>500 g</p><p>₹25</p>
+            <button class="add-button" onclick="addToCart('Cucumber',25)">Add</button>
+        </div>
+
+        <!-- DAIRY -->
+        <div class="card" data-category="Dairy">
+            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSmJ9TPtzlbJ-_4QzqES5P06J9z6Qqb4twK93E3P4moNGBq-W62IM0GySo3au1QF7KnyJWPUeEWmY6FlImTSDUjodKdiIxAJlhhHGjm0y-0pRyHjlEXOjgne7DlJpKgYLs799ELpPk&usqp=CAc" alt="Amul Milk">
+            <h3>Amul Milk</h3><p>500 ml</p><p>₹30</p>
+            <button class="add-button" onclick="addToCart('Amul Milk',30)">Add</button>
+        </div>
+
+        <div class="card" data-category="Dairy">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEnUbbiSy9OmZ1XOkfJh7zbpa05KrmmScq_0DEDjexZA&s=10" alt="Cheese">
+            <h3>Cheese Slices</h3><p>1 Pack</p><p>₹90</p>
+            <button class="add-button" onclick="addToCart('Cheese Slices',90)">Add</button>
+        </div>
+
+        <div class="card" data-category="Dairy">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGAt43gOEnQSp1IrnhOyVVG7QtyIDJhNdIO0hxzakffg&s=10" alt="Butter">
+            <h3>Butter</h3><p>100 g</p><p>₹55</p>
+            <button class="add-button" onclick="addToCart('Butter',55)">Add</button>
+        </div>
+
+        <div class="card" data-category="Dairy">
+            <img src="https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=500" alt="Yogurt">
+            <h3>Fresh Curd</h3><p>400 g</p><p>₹35</p>
+            <button class="add-button" onclick="addToCart('Fresh Curd',35)">Add</button>
+        </div>
+
+        <div class="card" data-category="Dairy">
+            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQiwdzwFk1y6q6PNuS4lcUvP43BpFgzUxrlG0jSzIDVsygoCuXnfh8YOhxKFtMNb2HKlMIJHBf0s-w_yulok5WZFexi9ROqOXz2ItpmQFR825IJZSbOt4Fg" alt="Brown Bread">
+            <h3>Brown Bread</h3><p>1 Packet</p><p>₹45</p>
+            <button class="add-button" onclick="addToCart('Brown Bread',45)">Add</button>
+        </div>
+
+        <!-- SNACKS -->
+        <div class="card" data-category="Snacks">
+            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSKYlXxQzZnZvfbvGbaOuvH7bH4awdQl6a3hN1lUg_WUrrdcXom_HMAswEQOvRzv7wJfVVpuymJdhGYXkv22KQ8EDXRisXm7o6qkDsUyV7yWse37sp3-GHp" alt="Potato Chips">
+            <h3>Potato Chips</h3><p>1 Packet</p><p>₹20</p>
+            <button class="add-button" onclick="addToCart('Potato Chips',20)">Add</button>
+        </div>
+
+        <div class="card" data-category="Snacks">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFqGdANd3phes4YFSRkgijeWw8_7w56WikJZQRlkYvTQ&s=10" alt="Biscuits">
+            <h3>Chocolate Biscuits</h3><p>1 Packet</p><p>₹30</p>
+            <button class="add-button" onclick="addToCart('Chocolate Biscuits',30)">Add</button>
+        </div>
+
+        <div class="card" data-category="Snacks">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo3lhn8nk3ep9Hdl1nqboez_Bb6loEyqItotZdOQNp6A&s=10" alt="Cookies">
+            <h3>Cookies</h3><p>1 Pack</p><p>₹45</p>
+            <button class="add-button" onclick="addToCart('Cookies',45)">Add</button>
+        </div>
+
+        <div class="card" data-category="Snacks">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEDY2WX2ns9iJSYNcR95PjmEzk-iSdJHlic0dbmA15eg&s=10" alt="Popcorn">
+            <h3>Salted Popcorn</h3><p>1 Packet</p><p>₹25</p>
+            <button class="add-button" onclick="addToCart('Salted Popcorn',25)">Add</button>
+        </div>
+
+        <div class="card" data-category="Snacks">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQetbHp7v43ZKXbkuP-rbEj7_K9Ogv407kGO8QclQrusg&s" alt="Namkeen">
+            <h3>Namkeen</h3><p>1 Packet</p><p>₹25</p>
+            <button class="add-button" onclick="addToCart('Namkeen',25)">Add</button>
+        </div>
+
+        <!-- BEVERAGES -->
+        <div class="card" data-category="Beverages">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXUwxmRJEPw_Xg8KB2MkghclcKKCnbO6rqI-CybCYqHQ&s=10" alt="Orange Juice">
+            <h3>Orange Juice</h3><p>1 Bottle</p><p>₹60</p>
+            <button class="add-button" onclick="addToCart('Orange Juice',60)">Add</button>
+        </div>
+
+        <div class="card" data-category="Beverages">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXSSNFYa6eRQRvwbdqIy8kbFHq5MBieeIKd6jjFEFrA&s=10" alt="Lemonade">
+            <h3>Lemonade</h3><p>1 Bottle</p><p>₹35</p>
+            <button class="add-button" onclick="addToCart('Lemonade',35)">Add</button>
+        </div>
+
+        <div class="card" data-category="Beverages">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYqmEoQDB_0PmBuV46izNiK4MW2cEw0NFTf2e0yk0glw&s=10" alt="Iced Tea">
+            <h3>Iced Tea</h3><p>1 Bottle</p><p>₹45</p>
+            <button class="add-button" onclick="addToCart('Iced Tea',45)">Add</button>
+        </div>
+
+        <div class="card" data-category="Beverages">
+            <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?w=500" alt="Cold Drink">
+            <h3>Cold Drink</h3><p>750 ml</p><p>₹40</p>
+            <button class="add-button" onclick="addToCart('Cold Drink',40)">Add</button>
+        </div>
+
+        <div class="card" data-category="Beverages">
+            <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500" alt="Milkshake">
+            <h3>Chocolate Milkshake</h3><p>1 Bottle</p><p>₹70</p>
+            <button class="add-button" onclick="addToCart('Chocolate Milkshake',70)">Add</button>
         </div>
 
     </div>
 
+    <p id="noResults" style="display:none; text-align:center; margin:20px;">
+        No products found.
+    </p>
+</section>
+
+    <section id="cart" class="cart">
+        <h2>Your Cart</h2>
+
+        <div id="cartItems" class="cart-summary">
+            <p>Your cart is empty.</p>
+        </div>
+
+        <h3>Total: ₹<span id="cartTotal">0</span></h3>
+
+        <p class="cart-note">Your selected items will remain saved in this browser.</p>
+
+        <button class="add-button" onclick="clearCart()">Clear Cart</button>
+    </section>
+
+    <section id="about">
+        <h2>About QuickBasket</h2>
+        <p class="info-text">
+            QuickBasket is a grocery shopping website concept designed to make
+            everyday shopping simple and convenient.
+        </p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p class="info-text">Email: support@quickbasket.example</p>
+    </section>
+
     <footer>
         <p>Copyright &copy; 2026 QuickBasket</p>
     </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem("quickBasketCart")) || [];
+
+        function saveCart() {
+            localStorage.setItem("quickBasketCart", JSON.stringify(cart));
+            displayCart();
+        }
+
+        function addToCart(name, price) {
+            let item = cart.find(product => product.name === name);
+
+            if (item) {
+                item.quantity++;
+            } else {
+                cart.push({ name: name, price: price, quantity: 1 });
+            }
+
+            saveCart();
+            alert(name + " added to cart!");
+        }
+
+        function displayCart() {
+            let cartItems = document.getElementById("cartItems");
+            let total = 0;
+            let count = 0;
+
+            cartItems.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = "<p>Your cart is empty.</p>";
+            }
+
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                count += item.quantity;
+
+                let row = document.createElement("div");
+                row.className = "cart-row";
+
+                let name = document.createElement("span");
+                name.textContent = item.name + " - ₹" + item.price;
+
+                let quantity = document.createElement("span");
+                quantity.textContent = "Qty: " + item.quantity;
+
+                let minus = document.createElement("button");
+                minus.textContent = "−";
+                minus.onclick = () => changeQuantity(index, -1);
+
+                let plus = document.createElement("button");
+                plus.textContent = "+";
+                plus.onclick = () => changeQuantity(index, 1);
+
+                let remove = document.createElement("button");
+                remove.textContent = "Remove";
+                remove.onclick = () => removeItem(index);
+
+                row.append(name, quantity, minus, plus, remove);
+                cartItems.appendChild(row);
+            });
+
+            document.getElementById("cartTotal").textContent = total;
+            document.getElementById("cartCount").textContent = count;
+        }
+
+        function changeQuantity(index, change) {
+            cart[index].quantity += change;
+
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            saveCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            saveCart();
+        }
+
+        function showCart() {
+            document.getElementById("cart").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        function filterCategory(category) {
+            let cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+                card.style.display =
+                    card.dataset.category === category ? "" : "none";
+            });
+
+            document.getElementById("noResults").style.display = "none";
+        }
+
+        document.getElementById("searchInput").addEventListener("input", function() {
+            let searchText = this.value.toLowerCase();
+            let cards = document.querySelectorAll(".card");
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                let productName = card.querySelector("h3").textContent.toLowerCase();
+                let category = card.dataset.category.toLowerCase();
+
+                if (productName.includes(searchText) || category.includes(searchText)) {
+                    card.style.display = "";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            document.getElementById("noResults").style.display =
+                visibleCount === 0 ? "block" : "none";
+        });
+
+        displayCart();
+    </script>
 
 </body>
 </html>
